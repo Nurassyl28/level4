@@ -1,0 +1,167 @@
+{\rtf1\ansi\ansicpg1251\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 ArialMT;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red255\green255\blue255;
+\red183\green111\blue179;\red193\green193\blue193;\red141\green213\blue254;\red203\green203\blue202;\red212\green213\blue153;
+\red194\green125\blue100;\red71\green138\blue206;\red255\green255\blue255;\red67\green192\blue160;\red193\green193\blue193;
+\red167\green197\blue151;\red193\green193\blue193;\red255\green255\blue255;}
+{\*\expandedcolortbl;;\cspthree\c0\c0\c0;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000\c0;
+\cssrgb\c77407\c52698\c75307;\cssrgb\c80176\c80176\c79976;\cssrgb\c61545\c86704\c99884;\cssrgb\c83320\c83320\c83112;\cssrgb\c86247\c86215\c66392;
+\cssrgb\c80772\c56796\c46790;\cssrgb\c34146\c61677\c84338;\cssrgb\c100000\c100000\c99985\c0;\cssrgb\c30631\c78928\c69023;\cssrgb\c80000\c80000\c80000;
+\cssrgb\c71035\c80830\c65726;\cssrgb\c80088\c80088\c79988;\cssrgb\c100000\c100000\c99971\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww16660\viewh18100\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs36 \cf0 Section 1\
+\
+1. It\'92s framework directed to backend, difference form other: very fast, can work with asynchronous function \
+\
+2. It\'92s a process of how fastapi gets request and sed response to user \
+\
+3. 
+\f1 \cf2 Process requests before routes and modify responses after routes
+\f0 \cf0 \
+\
+4. Read JSON and compares to python dictionary of Pydantic model and make available to work with function \
+\
+\
+Section 2\
+\
+1.
+\f1 \cf3 b) 
+\f0 uvicorn main:app --reload\
+\
+2.
+\f1 c) 
+\f0 @app.post()\
+\
+3.
+\f1 \cf2 a) Process requests before routes and modify responses after routes\
+\
+\
+Section 3\
+\
+1. 
+\f2 \cf3 \cb4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec5 from\strokec6  fastapi \strokec5 import\strokec6  FastAPI\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec7 app\strokec6  \strokec8 =\strokec6  FastAPI()\
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec9 @\strokec7 app\strokec9 .get\strokec6 (\strokec10 "/hello"\strokec6 )\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec11 def\strokec6  \strokec9 hello\strokec6 ():\
+    \strokec5 return\strokec6   \{\strokec10 "message"\strokec6 : \strokec10 "Hello, Level 4!"\strokec6  \}\
+\
+\
+\
+\
+2. \cb12 \strokec5 from\cb12 \strokec6  fastapi \cb12 \strokec5 import\cb12 \strokec6  FastAPI\
+\pard\pardeftab720\partightenfactor0
+\cf3 \cb12 \strokec5 from\cb12 \strokec6  pydantic \cb12 \strokec5 import\cb12 \strokec6  BaseModel\
+\
+\cb12 \strokec7 app\cb12 \strokec6  \cb12 \strokec8 =\cb12 \strokec6  FastAPI()\
+\
+\cb12 \strokec11 class\cb12 \strokec6  \cb12 \strokec13 User\cb12 \strokec6 (\cb12 \strokec13 BaseModel\cb12 \strokec6 ):\
+    \cb12 \strokec7 name\cb12 \strokec6 : \cb12 \strokec13 str\cb12 \strokec6 \
+    \cb12 \strokec7 age\cb12 \strokec6 :\cb12 \strokec13 int\cb12 \strokec6 \
+\
+\cb12 \strokec9 @\cb12 \strokec7 app\cb12 \strokec9 .post\cb12 \strokec6 (\cb12 \strokec10 "/user"\cb12 \strokec6 )\
+\cb12 \strokec11 def\cb12 \strokec6  \cb12 \strokec9 user_create\cb12 \strokec6 (\cb12 \strokec7 user\cb12 \strokec6 : \cb12 \strokec13 User\cb12 \strokec6 ):\
+    \cb12 \strokec5 return\cb12 \strokec6  \{\cb12 \strokec10 "name"\cb12 \strokec6 : \cb12 \strokec7 user\cb12 \strokec6 .\cb12 \strokec7 name\cb12 \strokec6 , \cb12 \strokec10 "age"\cb12 \strokec6 : \cb12 \strokec7 user\cb12 \strokec6 .\cb12 \strokec7 age\cb12 \strokec6 \}\
+\
+\
+\
+\
+3. \cb4 \strokec5 from\strokec6  fastapi \strokec5 import\strokec6  Request\
+\
+\strokec9 @app.midleware\strokec6 (\strokec10 "http"\strokec6 )\
+\strokec11 async\strokec6  \strokec11 def\strokec6  \strokec9 log_in\strokec6 (\strokec7 request\strokec6 : Request, \strokec7 call_next\strokec6 ):\
+    \strokec9 print\strokec6 (\strokec10 'Request resived'\strokec6 )\
+    \strokec7 response\strokec6  \strokec8 =\strokec6  \strokec5 await\strokec6  \strokec7 call_next\strokec6 (\strokec7 request\strokec6 )\
+    \strokec5 return\strokec6  \strokec7 response
+\fs24 \cf14 \cb1 \strokec14 \
+
+\fs36 \cf3 \cb12 \strokec6 \
+\
+\
+Section 4\
+\
+\
+1.\
+\cb4 \strokec7 arr\strokec6  \strokec8 =\strokec6  [\strokec15 5\strokec6 , \strokec15 2\strokec6 , \strokec15 3\strokec6  , \strokec15 1\strokec6 ]\
+\
+\strokec7 n\strokec6  \strokec8 =\strokec6  \strokec9 len\strokec6 (\strokec7 arr\strokec6 )\
+\
+\strokec5 for\strokec6  \strokec7 i\strokec6  \strokec5 in\strokec6  \strokec13 range\strokec6 (\strokec7 n\strokec8 -\strokec15 1\strokec6 ):\
+    \strokec5 for\strokec6  \strokec7 j\strokec6  \strokec5 in\strokec6  \strokec13 range\strokec6 (\strokec15 0\strokec6 , \strokec7 n\strokec8 -\strokec7 i\strokec8 -\strokec15 2\strokec6 ):\
+        \strokec5 if\strokec6  \strokec7 arr\strokec6 [\strokec7 j\strokec6 ] \strokec8 >\strokec6  \strokec7 arr\strokec6 [\strokec7 j\strokec8 +\strokec15 1\strokec6 ]:\
+            \strokec7 arr\strokec6 [\strokec7 j\strokec6 ], \strokec7 arr\strokec6 [\strokec7 j\strokec6  \strokec8 +\strokec6  \strokec15 1\strokec6 ] \strokec8 =\strokec6  \strokec7 arr\strokec6 [\strokec7 j\strokec6  \strokec8 +\strokec6  \strokec15 1\strokec6 ], \strokec7 arr\strokec6 [\strokec7 j\strokec6 ]\
+\cb12 \strokec6 \
+\
+2.\
+\
+\cb4 \strokec11 def\strokec6  \strokec9 merge_sort\strokec6 (\strokec7 arr\strokec6 ):\
+    \strokec5 if\strokec6  \strokec9 len\strokec6 (\strokec7 arr\strokec6 ) \strokec8 <=\strokec6  \strokec15 1\strokec6 :\
+        \strokec5 return\strokec6  \strokec7 arr\strokec6 [:]\
+    \strokec7 mid\strokec6  \strokec8 =\strokec6  \strokec9 len\strokec6 (\strokec7 arr\strokec6 ) \strokec8 //\strokec6  \strokec15 2\strokec6 \
+    \strokec7 left_sorted\strokec6  \strokec8 =\strokec6  \strokec9 merge_sort\strokec6 (\strokec7 arr\strokec6 [:\strokec7 mid\strokec6 ])\
+    \strokec7 right_sorted\strokec6  \strokec8 =\strokec6  \strokec9 merge_sort\strokec6 (\strokec7 arr\strokec6 [\strokec7 mid\strokec6 :])\
+    \strokec5 return\strokec6  merge(\strokec7 left_sorted\strokec6 , \strokec7 right_sorted\strokec6 )\cb1 \strokec16 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf3 \cb12 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf3 \
+Section 5\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0 \cf3 \cb12 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 from fastapi import FastAPI\
+app = FastAPI( )\
+@app.get("/ping")\
+def ping():\
+return\cb17  \cb1 \{ "message": "pong" \}
+\f1\fs22 \cf2 \
+
+\f0\fs36 \cf3 \cb12 \
+@app.post("/user")\
+def create_user(name: str, age: int):\
+return \{\'abname\'bb: str, \'abage\'bb: int\}
+\f2 \cb12 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf3 \
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+
+\fs24 \cf14 \cb1 \strokec14 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs36 \cf3 \strokec16 \
+
+\fs24 \cf14 \strokec14 \
+}
