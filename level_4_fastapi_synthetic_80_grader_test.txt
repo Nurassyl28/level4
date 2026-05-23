@@ -1,0 +1,143 @@
+Synthetic Sample Answer for LLM Grader Testing
+Backend Demo Exam - Level 4
+Python + FastAPI Fundamentals
+
+Note: This is a synthetic sample answer created only for testing how an LLM grader checks exam responses.
+Target approximate score: around 80%.
+
+SECTION 1 - THEORY
+
+1. What is FastAPI and why is it popular for building backend applications?
+
+FastAPI is a Python framework for building APIs and backend services. It is popular because it is fast, easy to write, supports automatic documentation, and uses type hints to validate data. It is also good for modern backend projects because it supports async code.
+
+2. Explain what an HTTP request lifecycle is inside a FastAPI application.
+
+The HTTP request lifecycle starts when the client sends a request to the server. FastAPI receives the request, finds the matching route, runs the route function, and sends a response back to the client. Middleware can also run during this process before and after the route.
+
+3. What is a middleware in FastAPI and when would you use it?
+
+Middleware is code that runs around every request. I would use it for logging requests, checking authentication, adding headers, measuring response time, or handling CORS. It can process the request before the route and the response after the route.
+
+4. What is the purpose of request body parsing in an API?
+
+Request body parsing is used to read data that comes from the client, usually JSON. It lets the API convert that data into Python objects and validate fields like name, age, email, or password.
+
+SECTION 2 - MULTIPLE CHOICE
+
+1. Which command runs a FastAPI app with auto-reload?
+
+Answer: b) uvicorn main:app --reload
+
+2. What decorator is used to define a POST route in FastAPI?
+
+Answer: c) @app.post()
+
+3. Middleware functions in FastAPI can:
+
+Answer: b) Only handle POST requests
+
+SECTION 3 - CODING
+
+1. Create a simple FastAPI app with one route /hello that returns { "message": "Hello, Level 4!" }.
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/hello")
+def hello():
+    return {"message": "Hello, Level 4!"}
+
+
+2. Write a POST endpoint /user that accepts JSON data with "name" and "age" and returns the same data.
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class User(BaseModel):
+    name: str
+    age: int
+
+@app.post("/user")
+def create_user(user: User):
+    return {"name": user.name, "age": user.age}
+
+
+3. Write a simple middleware that prints "Request received" before handling any route.
+
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.middleware("http")
+async def log_request(request: Request, call_next):
+    print("Request received")
+    response = await call_next(request)
+    return response
+
+
+SECTION 4 - ALGORITHMS
+
+1. Write the Bubble Sort algorithm.
+
+Bubble Sort compares two nearby elements and swaps them if they are in the wrong order. It keeps repeating this until the list becomes sorted.
+
+Pseudocode:
+
+for i from 0 to length(array) - 1:
+    for j from 0 to length(array) - i - 2:
+        if array[j] > array[j + 1]:
+            swap array[j] and array[j + 1]
+
+
+2. Write or explain the Insertion Sort or Merge Sort algorithm.
+
+Insertion Sort goes through the array and puts each item into the correct place in the sorted part of the list.
+
+Pseudocode:
+
+for i from 1 to length(array) - 1:
+    key = array[i]
+    j = i - 1
+
+    while j >= 0 and array[j] > key:
+        array[j + 1] = array[j]
+        j = j - 1
+
+    array[j] = key
+
+
+SECTION 5 - DEBUGGING
+
+Original code:
+
+from fastapi import FastAPI
+app = FastAPI
+@app.get("/ping")
+def ping():
+return "pong"
+@app.post("/user")
+def create_user(name: str, age: int):
+return {name: name, age: age}
+
+Corrected code:
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class User(BaseModel):
+    name: str
+    age: int
+
+@app.get("/ping")
+def ping():
+    return "pong"
+
+@app.post("/user")
+def create_user(user: User):
+    return {"name": user.name, "age": user.age}
